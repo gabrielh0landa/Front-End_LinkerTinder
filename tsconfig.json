@@ -5,7 +5,8 @@
     "strict": true,
     "outDir": "./public/dist",
     "rootDir": "./src",
-    "moduleResolution": "node" // <-- ADICIONE ESTA LINHA
+    "moduleResolution": "node",
+    "allowUmdGlobalAccess": true 
   },
   "include": [
     "src"

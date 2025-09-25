@@ -4,21 +4,18 @@ import { criarFormularioCandidato } from './views/candidatoView.js';
 import { criarFormularioEmpresa } from './views/empresaView.js';
 import { criarDashboardCandidato } from './views/candidatoDashboardView.js';
 import { criarDashboardEmpresa } from './views/empresaDashboardView.js';
-import { gerarGraficoSkills } from './views/graficoSkills.js'; // <-- 1. ADICIONE ESTE IMPORT
+// GARANTA QUE ESTE IMPORT ESTÁ AQUI
+import { gerarGraficoSkills } from './views/graficoSkills.js'; 
 
-// Adicionamos os novos nomes de página
 type NomePagina = 'cadastro-candidato' | 'cadastro-empresa' | 'dashboard-candidato' | 'dashboard-empresa';
 
-// Função Central: Renderiza a tela baseada no nome que recebe
 function renderizarTela(nomeDaPagina: NomePagina) {
   const container = document.getElementById('container-principal');
   if (!container) return;
-
   container.innerHTML = '';
 
   switch (nomeDaPagina) {
     case 'cadastro-candidato': {
-      // Lógica de cadastro do candidato... (sem alterações)
       container.innerHTML = criarFormularioCandidato();
       const form = document.getElementById('formulario-candidato');
       if (form) {
@@ -44,7 +41,6 @@ function renderizarTela(nomeDaPagina: NomePagina) {
     }
 
     case 'cadastro-empresa': {
-      // Lógica de cadastro da empresa... (sem alterações)
       container.innerHTML = criarFormularioEmpresa();
       const vagasTemporarias: Vagas[] = [];
       const btnAdicionarVaga = document.getElementById('btn-adicionar-vaga');
@@ -87,31 +83,26 @@ function renderizarTela(nomeDaPagina: NomePagina) {
       }
       break;
     }
-
-    // Nossas novas telas!
+    
     case 'dashboard-candidato': {
-      // Passamos o array de empresas para a view renderizar as vagas
       container.innerHTML = criarDashboardCandidato(empresas);
-      gerarGraficoSkills(candidatos);
       break;
     }
 
     case 'dashboard-empresa': {
-      // Passamos o array de candidatos para a view renderizar
       container.innerHTML = criarDashboardEmpresa(candidatos);
+      // GARANTA QUE ESTA LINHA ESTÁ AQUI
+      gerarGraficoSkills(candidatos); 
       break;
     }
   }
 }
 
-// Ponto de entrada da aplicação
 document.addEventListener('DOMContentLoaded', () => {
-  // Conecta todos os botões de navegação
   document.getElementById('nav-cadastro-candidato')?.addEventListener('click', () => renderizarTela('cadastro-candidato'));
   document.getElementById('nav-cadastro-empresa')?.addEventListener('click', () => renderizarTela('cadastro-empresa'));
   document.getElementById('nav-dashboard-candidato')?.addEventListener('click', () => renderizarTela('dashboard-candidato'));
   document.getElementById('nav-dashboard-empresa')?.addEventListener('click', () => renderizarTela('dashboard-empresa'));
 
-  // Mostra a primeira tela ao carregar a página
   renderizarTela('cadastro-candidato');
 });
